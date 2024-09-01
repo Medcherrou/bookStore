@@ -5,7 +5,8 @@ jdk:
 before_install:
   - chmod +x gradlew
   - rvm install 3.0.0  # Install Ruby 3.0.0
-  - rvm use 3.0.0      # Use Ruby 3.0.0 for the rest of the build
+  - rvm use 3.0.0 --default      # Set Ruby 3.0.0 as the default Ruby version
+  - ruby -v             # Verify the Ruby version
   - gem install bundler
   - bundle install
 
