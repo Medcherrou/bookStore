@@ -3,13 +3,13 @@ jdk:
   - openjdk17
 
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install -y ruby-build chruby
-  - ruby-install ruby 3.0.0            # Install Ruby 3.0.0 with chruby
-  - chruby ruby-3.0.0                  # Use Ruby 3.0.0
-  - ruby -v                            # Verify Ruby version
-  - gem install bundler                # Install Bundler
-  - gem install faraday-net_http -v 3.0.2  # Install faraday-net_http version 3.0.2
+  - rvm install 3.0.0 --default              # Install Ruby 3.0.0 and set it as default
+  - rvm use 3.0.0 --default                  # Ensure Ruby 3.0.0 is the default version
+  - ruby -v                                  # Check that Ruby 3.0.0 is in use
+  - which ruby                               # Confirm the path to Ruby
+  - gem install bundler                      # Install bundler
+  - gem install faraday-net_http -v 3.0.2    # Install faraday-net_http version 3.0.2
+  - gem install dpl -v 1.10.16               # Install dpl manually
   - chmod +x ./gradlew
 
 script:
@@ -17,10 +17,10 @@ script:
 
 deploy:
   provider: script
-  script: |
-    chruby ruby-3.0.0                # Re-ensure Ruby 3.0.0 during deploy
-    ruby -v                          # Confirm Ruby 3.0.0 during deploy
-    gem install faraday-net_http -v 3.0.2  # Re-install required gem in deploy phase
-    dpl --provider=heroku --app="book-demo-store" --api-key=$HEROKU_TOKEN
+  script:
+    - rvm use 3.0.0 --default               # Re-ensure Ruby 3.0.0 during deploy
+    - ruby -v                               # Confirm Ruby 3.0.0 during deploy
+    - gem install faraday-net_http -v 3.0.2 # Re-install required gem in deploy phase
+    - dpl --provider=heroku --app="book-demo-store" --api-key=$HEROKU_TOKEN
   on:
     branch: main
