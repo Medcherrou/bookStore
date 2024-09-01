@@ -3,7 +3,7 @@ jdk:
   - openjdk17
 
 before_install:
-  - chmod +x gradlew
+  - chmod +x gradlew  # Make gradlew script executable
   - bash -c "source ~/.rvm/scripts/rvm"  # Ensure RVM is loaded properly using bash -c
   - rvm install 3.0.0 --default  # Install Ruby 3.0.0 and set it as default
   - rvm use 3.0.0 --default      # Confirm Ruby 3.0.0 is in use
@@ -13,7 +13,7 @@ before_install:
   - chmod +x deploy.sh  # Make the deploy.sh script executable
 
 script:
-  - ./gradlew assemble
+  - ./gradlew assemble  # Run the Gradle assemble task
 
 deploy:
   script: ./deploy.sh  # Use the custom deploy script
