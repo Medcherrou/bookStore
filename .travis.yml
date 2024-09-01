@@ -12,3 +12,5 @@ deploy:
   provider: heroku
   api_key: $HEROKU_TOKEN
   app: "book-demo-store"
+  on:
+    branch: main
