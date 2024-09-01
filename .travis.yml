@@ -4,7 +4,7 @@ jdk:
 
 before_install:
   - echo "Starting RVM setup"
-  - source $HOME/.rvm/scripts/rvm || source /usr/local/rvm/scripts/rvm  # Ensure RVM is sourced correctly
+  - bash -c "source $HOME/.rvm/scripts/rvm || source /usr/local/rvm/scripts/rvm"  # Ensure RVM is sourced correctly
   - rvm install 3.0.0 --default
   - rvm use 3.0.0 --default
   - ruby -v
@@ -27,7 +27,7 @@ before_deploy:
 deploy:
   provider: script
   script:
-    - source $HOME/.rvm/scripts/rvm || source /usr/local/rvm/scripts/rvm  # Ensure RVM is sourced correctly during deploy
+    - bash -c "source $HOME/.rvm/scripts/rvm || source /usr/local/rvm/scripts/rvm"  # Ensure RVM is sourced correctly during deploy
     - rvm use 3.0.0 --default
     - ruby -v
     - dpl --provider=heroku --app="book-demo-store" --api-key=$HEROKU_TOKEN
