@@ -6,6 +6,8 @@ deploy:
   api_key:
     secure: $HEROKU_TOKEN
   app : "book-demo-store"
+  on:
+    branch: main
 
 before_install:
   - chmod +x ./gradlew
