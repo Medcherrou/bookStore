@@ -4,7 +4,7 @@ jdk:
 
 before_install:
   - echo "Starting RVM setup"
-  - source $HOME/.rvm/scripts/rvm
+  - source $HOME/.rvm/scripts/rvm || source /usr/local/rvm/scripts/rvm  # Ensure RVM is sourced correctly
   - rvm install 3.0.0 --default
   - rvm use 3.0.0 --default
   - ruby -v
@@ -15,23 +15,21 @@ before_install:
   - echo "Gem installation complete, making gradlew executable"
   - chmod +x ./gradlew
 
-
-
 script:
-  - ./gradlew build                             # Run your build script
+  - ./gradlew build  # Run your build script
 
 before_deploy:
   - git config --global user.email "mohamedcherrou2000@gmail.com"
   - git config --global user.name "Cherrou Mohamed"
   - git add -A
-  - git commit -m "Auto-commit from Travis CI"  # Auto-commit any changes before deployment
+  - git commit -m "Auto-commit from Travis CI" || true  # Prevent failure if no changes to commit
 
 deploy:
   provider: script
   script:
-    - rvm use 3.0.0 --default                   # Re-ensure Ruby 3.0.0 during deploy
-    - ruby -v                                   # Confirm Ruby 3.0.0 during deploy
-    - gem install faraday-net_http -v 3.0.2     # Re-install required gem in deploy phase
+    - source $HOME/.rvm/scripts/rvm || source /usr/local/rvm/scripts/rvm  # Ensure RVM is sourced correctly during deploy
+    - rvm use 3.0.0 --default
+    - ruby -v
     - dpl --provider=heroku --app="book-demo-store" --api-key=$HEROKU_TOKEN
   on:
-    branch: main                                # Deploy only when changes are pushed to the main branch
+    branch: main  # Deploy only when changes are pushed to the main branch
