@@ -40,7 +40,6 @@ tasks.named('test') {
 
 bootJar {
     archiveFileName = 'bookStore-0.0.1-SNAPSHOT.jar'  // Optional: specify the JAR name
-    mainClassName = 'com.weCode.YourMainClass'  // Replace with your actual main class
 }
 
 jar {
