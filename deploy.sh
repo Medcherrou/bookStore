@@ -2,13 +2,20 @@
 
 set -e  # Exit immediately if a command exits with a non-zero status
 
-# Ensure Ruby is set to the correct version
+# Use the correct Ruby version
 rvm use 3.0.0 --default
 ruby -v
 
+# Create a new temporary branch
+git checkout -b deploy-branch
+
 # Stage and commit any modified or untracked files
-git add -A  # This stages all changes, including untracked files
+git add -A  # Stage all changes
 git commit -m "Auto-commit changes during deployment"
 
-# Push the changes to Heroku
-git push heroku HEAD:refs/heads/main --force  # Force push to the main branch
+# Push the temporary branch to Heroku
+git push heroku deploy-branch:refs/heads/main --force
+
+# Clean up by deleting the temporary branch
+git checkout -
+git branch -D deploy-branch
