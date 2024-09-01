@@ -21,15 +21,15 @@ script:
 before_deploy:
   - git config --global user.email "mohamedcherrou2000@gmail.com"
   - git config --global user.name "Cherrou Mohamed"
+  - git remote add heroku https://git.heroku.com/book-demo-store.git  # Ensure Heroku remote is added
   - git add -A
   - git commit -m "Auto-commit from Travis CI" || true  # Prevent failure if no changes to commit
 
 deploy:
   provider: script
   script:
-    - bash -c "source $HOME/.rvm/scripts/rvm || source /usr/local/rvm/scripts/rvm"  # Ensure RVM is sourced correctly during deploy
+    - bash -c "source $HOME/.rvm/scripts/rvm || source /usr/local/rvm/scripts/rvm"
     - rvm use 3.0.0 --default
-    - ruby -v
-    - dpl --provider=heroku --app="book-demo-store" --api-key=$HEROKU_TOKEN
+    - git push heroku `git subtree split --prefix . main`:refs/heads/main --force  # Push to Heroku
   on:
     branch: main  # Deploy only when changes are pushed to the main branch
