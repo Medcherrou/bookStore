@@ -1,16 +1,10 @@
 #!/bin/bash
 
-set -e
+set -e  # Exit immediately if a command exits with a non-zero status
 
-# Ensure Ruby is set to the correct version
+# Use the correct Ruby version
 rvm use 3.0.0 --default
 ruby -v
 
-# Add any modified or untracked files
-git add -A
-
-# Commit the changes with a message
-git commit -m "Auto-commit during deployment"
-
-# Deploy to Heroku
-git push heroku main
+# Force push to Heroku, ignoring uncommitted changes
+git push heroku main --force
