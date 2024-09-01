@@ -16,4 +16,7 @@ script:
   - ./gradlew assemble  # Run the Gradle assemble task
 
 deploy:
+  provider: script
   script: ./deploy.sh  # Use the custom deploy script
+  on:
+    branch: main  # Ensure deployment is triggered on the main branch
