@@ -3,19 +3,20 @@ jdk:
   - openjdk17
 
 before_install:
-  - rvm install 3.0.0        # Install Ruby 3.0.0
-  - rvm use 3.0.0 --default  # Set Ruby 3.0.0 as the default version globally
-  - ruby -v                  # Verify the Ruby version
-  - gem install bundler      # Ensure bundler is installed for Ruby 3.0.0
+  - rvm install 3.0.0 --default  # Install and set Ruby 3.0.0 as default
+  - rvm use 3.0.0 --default      # Ensure Ruby 3.0.0 is used globally
+  - rvm list                     # List installed Ruby versions for confirmation
+  - ruby -v                      # Verify Ruby version
+  - which ruby                   # Verify the path of Ruby
+  - gem install bundler          # Install Bundler to manage Ruby gems
+  - gem install dpl -v 1.10.16   # Manually install dpl version 1.10.16
   - chmod +x ./gradlew
 
 script:
   - ./gradlew build
 
 deploy:
-  provider: heroku
-  api_key: $HEROKU_TOKEN
-  app: "book-demo-store"
-  dpl_version: 1.10.16       # Specify the dpl version to use
+  provider: script
+  script: dpl --provider=heroku --app="book-demo-store" --api-key=$HEROKU_TOKEN
   on:
     branch: main
