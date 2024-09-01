@@ -1,20 +1,15 @@
 language: java
 jdk:
   - openjdk17
+deploy:
+  provider: heroku
+  api_key: $HEROKU_TOKEN
+  app : "book-demo-store"
+  on:
+    branch: main
 
 before_install:
   - chmod +x ./gradlew
-  - curl https://cli-assets.heroku.com/install.sh | sh
 
 script:
   - ./gradlew build
-
-deploy:
-  skip_cleanup: true
-  provider: script
-  script:
-    - echo "$HEROKU_API_KEY" | heroku auth:token
-    - heroku git:remote -a book-demo-store
-    - git push heroku main
-  on:
-    branch: main
