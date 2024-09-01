@@ -13,7 +13,7 @@ deploy:
   skip_cleanup: true
   provider: script
   script:
-    - heroku auth:token
+    - echo "$HEROKU_API_KEY" | heroku auth:token
     - heroku git:remote -a book-demo-store
     - git push heroku main
   on:
