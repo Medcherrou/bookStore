@@ -16,8 +16,11 @@ script:
   - ./gradlew build
 
 deploy:
-  provider: heroku
-  api_key: $HEROKU_TOKEN
-  app: "book-demo-store"
+  provider: script
+  script: |
+    chruby ruby-3.0.0                # Re-ensure Ruby 3.0.0 during deploy
+    ruby -v                          # Confirm Ruby 3.0.0 during deploy
+    gem install faraday-net_http -v 3.0.2  # Re-install required gem in deploy phase
+    dpl --provider=heroku --app="book-demo-store" --api-key=$HEROKU_TOKEN
   on:
     branch: main
