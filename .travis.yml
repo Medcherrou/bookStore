@@ -1,6 +1,11 @@
 language: java
 jdk:
   - openjdk17
+deploy:
+  provider: heroku
+  api_key:
+    secure: $HEROKU_TOKEN
+  app : "book-demo-store"
 
 before_install:
   - chmod +x ./gradlew
