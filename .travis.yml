@@ -3,16 +3,18 @@ jdk:
   - openjdk17
 
 before_install:
-  - bash --login                                # Ensure a login shell is used
-  - source $HOME/.rvm/scripts/rvm                # Explicitly source RVM
-  - rvm install 3.0.0 --default                 # Install Ruby 3.0.0 and set it as default
-  - rvm use 3.0.0 --default                     # Ensure Ruby 3.0.0 is the default version
-  - ruby -v                                     # Check that Ruby 3.0.0 is in use
-  - which ruby                                  # Confirm the path to Ruby
-  - gem install bundler                         # Install bundler
-  - gem install faraday-net_http -v 3.0.2       # Install faraday-net_http version 3.0.2
-  - gem install dpl -v 1.10.16                  # Install dpl manually if needed
-  - chmod +x ./gradlew                          # Make gradlew executable if needed
+  - echo "Starting RVM setup"
+  - source $HOME/.rvm/scripts/rvm
+  - rvm install 3.0.0 --default
+  - rvm use 3.0.0 --default
+  - ruby -v
+  - echo "RVM setup complete, starting Gem installation"
+  - gem install bundler
+  - gem install faraday-net_http -v 3.0.2
+  - gem install dpl -v 1.10.16
+  - echo "Gem installation complete, making gradlew executable"
+  - chmod +x ./gradlew
+
 
 
 script:
