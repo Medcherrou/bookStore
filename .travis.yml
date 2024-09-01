@@ -14,6 +14,11 @@ before_install:
 
 script:
   - ./gradlew build
+before_deploy:
+  - git config --global user.email "mohamedcherrou2000@gmail.com"  # Set your email
+  - git config --global user.name "Cherrou Mohamed"         # Set your name
+  - git add -A                                        # Add all changes
+  - git commit -m "Automated commit before deploy"    # Commit changes
 
 deploy:
   provider: script
