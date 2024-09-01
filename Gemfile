@@ -1,4 +1,3 @@
 source 'https://rubygems.org'
 
-gem 'dpl', '~> 2.0.0'
-gem 'faraday-net_http', '3.0.2'
+gem 'dpl', '1.10.7'  # or another version before the introduction of the incompatible faraday-net_http dependency
