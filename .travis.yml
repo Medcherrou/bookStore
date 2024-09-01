@@ -1,15 +1,19 @@
 language: java
 jdk:
   - openjdk17
-deploy:
-  provider: heroku
-  api_key: $HEROKU_TOKEN
-  app : "book-demo-store"
-  on:
-    branch: main
 
 before_install:
+  - rvm install 3.0.0       # Install Ruby 3.0.0
+  - rvm use 3.0.0           # Use Ruby 3.0.0
   - chmod +x ./gradlew
 
 script:
   - ./gradlew build
+
+deploy:
+  provider: heroku
+  api_key: $HEROKU_TOKEN
+  app: "book-demo-store"
+  dpl_version: 1.10.16      # Specify the dpl version
+  on:
+    branch: main
