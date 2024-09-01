@@ -3,13 +3,13 @@ jdk:
   - openjdk17
 
 before_install:
-  - chmod +x gradlew
-  - rvm install 3.0.0 --default  # Install Ruby 3.0.0 and set it as the default
-  - rvm use 3.0.0 --default      # Reaffirm using Ruby 3.0.0 as the default
-  - rvm --default use 3.0.0      # Another way to enforce Ruby 3.0.0
-  - ruby -v                      # Verify Ruby version
+  - source ~/.rvm/scripts/rvm  # Source RVM scripts
+  - rvm install 3.0.0 --default
+  - rvm use 3.0.0 --default
+  - ruby -v
   - gem install bundler
   - bundle install
+
 
 script:
   - ./gradlew assemble
@@ -20,3 +20,4 @@ deploy:
   app: "book-demo-store"
   on:
     branch: main
+  ruby: 3.0.0   # Specify Ruby version directly in the deploy step
