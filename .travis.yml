@@ -26,10 +26,10 @@ before_deploy:
   - git commit -m "Auto-commit from Travis CI" || true  # Prevent failure if no changes to commit
 
 deploy:
-  provider: script
-  script:
-    - bash -c "source $HOME/.rvm/scripts/rvm || source /usr/local/rvm/scripts/rvm"
-    - rvm use 3.0.0 --default
-    - git push heroku `git subtree split --prefix . main`:refs/heads/main --force  # Push to Heroku
+  provider: heroku
+  api_key:
+    secure: $HEROKU_TOKEN  # Ensure this environment variable is set in Travis CI
+  app: book-demo-store
   on:
     branch: main  # Deploy only when changes are pushed to the main branch
+
