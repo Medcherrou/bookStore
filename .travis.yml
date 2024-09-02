@@ -3,20 +3,22 @@ jdk:
   - openjdk17
 
 before_install:
-  - chmod +x gradlew  # Make gradlew script executable
-  - bash -c "source ~/.rvm/scripts/rvm"  # Ensure RVM is loaded properly using bash -c
+  - chmod +x gradlew  # Ensure gradlew script is executable
+  - bash -c "source ~/.rvm/scripts/rvm"  # Load RVM (Ruby Version Manager)
   - rvm install 3.0.0 --default  # Install Ruby 3.0.0 and set it as default
-  - rvm use 3.0.0 --default      # Confirm Ruby 3.0.0 is in use
-  - ruby -v                      # Verify the Ruby version being used
-  - gem install bundler
-  - bundle install
-  - chmod +x deploy.sh  # Make the deploy.sh script executable
+  - rvm use 3.0.0 --default  # Use Ruby 3.0.0
+  - ruby -v  # Verify Ruby version
+  - gem install bundler  # Install bundler for managing Ruby dependencies
+  - bundle install  # Install required gems
+  - chmod +x deploy.sh  # Ensure deploy.sh script is executable (if you decide to keep it)
 
 script:
-  - ./gradlew assemble  # Run the Gradle assemble task
+  - ./gradlew assemble  # Build the project using Gradle
 
 deploy:
-  provider: script
-  script: ./deploy.sh  # Use the custom deploy script
+  provider: heroku  # Use Travis CI's native Heroku deployment provider
+  api_key: $HEROKU_TOKEN  # Use the secure API key for authentication
+  app: "book-demo-store"  # Replace with your Heroku app name
   on:
-    branch: main  # Ensure deployment is triggered on the main branch
+    branch: main  # Only deploy on the main branch
+:
