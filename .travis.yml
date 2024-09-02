@@ -10,7 +10,6 @@ before_install:
   - ruby -v  # Verify Ruby version
   - gem install bundler  # Install bundler for managing Ruby dependencies
   - bundle install  # Install required gems
-  - chmod +x deploy.sh  # Ensure deploy.sh script is executable (if you decide to keep it)
 
 script:
   - ./gradlew assemble  # Build the project using Gradle
