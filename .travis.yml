@@ -15,6 +15,8 @@ script:
   - ./gradlew assemble  # Build the project using Gradle
 
 before_deploy:
+  - rvm use 3.0.0 --default  # Re-ensure Ruby 3.0.0 is used during deployment
+  - gem install faraday-net_http -v 3.0.2  # Install the required version of faraday-net_http
   - git stash --all  # Stash all changes to ensure a clean state
 
 deploy:
