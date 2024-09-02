@@ -15,10 +15,15 @@ before_install:
 script:
   - ./gradlew assemble  # Build the project using Gradle
 
+before_deploy:
+  - git stash --all  # Stash all changes to ensure a clean state
+
 deploy:
   provider: heroku  # Use Travis CI's native Heroku deployment provider
   api_key: $HEROKU_TOKEN  # Use the secure API key for authentication
   app: "book-demo-store"  # Replace with your Heroku app name
   on:
     branch: main  # Only deploy on the main branch
-:
+
+after_deploy:
+  - git stash pop || true  # Reapply stashed changes, ignore errors if no stash
