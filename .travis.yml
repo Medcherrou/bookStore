@@ -2,29 +2,11 @@ language: java
 jdk:
   - openjdk17
 
-before_install:
-  - chmod +x gradlew  # Ensure gradlew script is executable
-  - bash -c "source ~/.rvm/scripts/rvm"  # Load RVM (Ruby Version Manager)
-  - rvm install 3.0.0 --default  # Install Ruby 3.0.0 and set it as default
-  - rvm use 3.0.0 --default  # Use Ruby 3.0.0
-  - ruby -v  # Verify Ruby version
-  - gem install bundler  # Install bundler for managing Ruby dependencies
-  - bundle install  # Install required gems
-
 script:
-  - ./gradlew assemble  # Build the project using Gradle
+  - ./gradlew check
 
-before_deploy:
-  - rvm use 3.0.0 --default  # Re-ensure Ruby 3.0.0 is used during deployment
-  - gem install faraday-net_http -v 3.0.2  # Install the required version of faraday-net_http
-  - git stash --all  # Stash all changes to ensure a clean state
 
 deploy:
-  provider: heroku  # Use Travis CI's native Heroku deployment provider
-  api_key: $HEROKU_TOKEN  # Use the secure API key for authentication
-  app: "book-demo-store"  # Replace with your Heroku app name
-  on:
-    branch: main  # Only deploy on the main branch
-
-after_deploy:
-  - git stash pop || true  # Reapply stashed changes, ignore errors if no stash
+  provider: heroku
+  api_key: $HEROKU_TOKEN
+  app: "book-demo-store"
